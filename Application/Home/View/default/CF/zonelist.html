@@ -1,0 +1,47 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>域名列表</h2>
+            <p class="lead"></p>
+        </div>
+    </header>
+</block>
+
+<block name="body">
+    <div class="span9">
+        <!-- Contents
+        ================================================== -->
+        <section id="contents">
+            <if condition="empty($zoneList)"><div class=""><h3>您还没有域名，从<a href="{:U('ZoneAdd')}">添加一个新域名</a>开始吧！</h3></div></if>
+            <volist name="zoneList" id="list">
+                <div class="">
+                    <h3><a href="{:U('ZoneDetail?zone_name='.$list)}">{$list}</a></h3>
+                </div>
+                <div>
+                    <span><a href="{:U('ZoneDelete?zone_name='.$list)}">删除域名</a></span>
+                </div>
+                <hr/>
+            </volist>
+        </section>
+    </div>
+        </div>
+</block>
+
+<block name="side">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li>
+            <a href="{:U('ZoneAdd')}">
+                <i class="icon-chevron-right"></i>添加新域名
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Logout')}">
+                <i class="icon-chevron-right"></i>退出登录
+            </a>
+        </li>
+    </ul>
+</div>
+</block>

@@ -1,0 +1,57 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>{$zone_name}</h2>
+            <p class="lead"></p>
+        </div>
+    </header>
+</block>
+
+<block name="body">
+    <div class="span9">
+        <!-- Contents
+        ================================================== -->
+        <section id="contents">
+            <volist name="cnames" id="list">
+                <div class="">
+                    <h3><a href="{:U('ZoneEdit?zone_name='.$zone_name.'&subdomain='.$key)}">{$key}</a></h3>
+                </div>
+                <div>
+                    <p class="lead">
+                        1. 将{$list[0]}解析到源服务器（使用A记录或CNAME记录均可）；<br/>
+                        2. 将{$key}的CNAME记录指向{$list[1]}。
+                    </p>
+                </div>
+                <div>
+                    <span><a href="{:U('ZoneDel?zone_name='.$zone_name.'&subdomain='.$key)}">删除记录</a></span>
+                </div>
+                <hr/>
+            </volist>
+        </section>
+    </div>
+        </div>
+</block>
+
+<block name="side">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li>
+            <a href="{:U('ZoneList')}">
+                <i class="icon-chevron-right"></i>返回域名列表
+            </a>
+        </li>
+        <li>
+            <a href="{:U('ZoneAdd?zone_name='.$zone_name)}">
+                <i class="icon-chevron-right"></i>添加新记录
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Logout')}">
+                <i class="icon-chevron-right"></i>退出登录
+            </a>
+        </li>
+    </ul>
+</div>
+</block>

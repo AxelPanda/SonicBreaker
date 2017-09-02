@@ -1,0 +1,4 @@
+Runtime
+Application/Common/Conf/config.php
+Application/Install/Data/install.lock
+Application/User/Conf/config.php

@@ -1,0 +1,70 @@
+<extend name="Base/common"/>
+
+<block name="header">
+	<header class="jumbotron subhead" id="overview">
+		<div class="container">
+			<h2>修改{$_GET.subdomain}</h2>
+			<p class="lead"></p>
+		</div>
+	</header>
+</block>
+
+<block name="body">
+	<div class="span9">
+		<section id="contents">
+		<form action="__SELF__" method="post">
+			<div class="control-group">
+				<label class="control-label" for="zone_name">域名</label>
+				<div class="controls">
+					<input type="text" class="span3" placeholder="请输入域名（不包含www.）" errormsg="请输入域名（不包含www.）" nullmsg="请输入域名（不包含www.）" datatype="*" name="zone_name" id="zone_name" value="{$zone_name}">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="subdomain">子域名</label>
+				<div class="controls">
+					<input type="text" class="span3" placeholder="请输入子域名（如www、bbs等）" errormsg="请输入子域名（如www、bbs等）" nullmsg="请输入子域名（如www、bbs等）" datatype="*" name="subdomain" id="subdomain" value="{$subdomain}">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="resolve_to">解析地址</label>
+				<div class="controls">
+					<input type="text" class="span3" placeholder="请输入解析地址（只能为域名不能为IP）" errormsg="请输入解析地址（只能为域名不能为IP）" nullmsg="请输入解析地址（只能为域名不能为IP）" datatype="*" name="resolve_to" id="resolve_to" value="{$resolve_to}">
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+				  <!--label class="checkbox">
+					<input type="checkbox"> 自动登陆
+				</label-->
+					<button type="submit" class="btn">提交</button>
+				</div>
+			</div>
+		</form>
+		</section>
+	</div>
+</div>
+</block>
+
+<block name="side">
+	<div class="span3 bs-docs-sidebar">
+		<ul class="nav nav-list bs-docs-sidenav">
+			<li>
+				<a href="{:U('ZoneList')}">
+					<i class="icon-chevron-right"></i>返回域名列表
+				</a>
+			</li>
+			<if condition="!empty($zone_name)">
+			<li>
+				<a href="{:U('ZoneDetail?zone_name='.$zone_name)}">
+					<i class="icon-chevron-right"></i>返回{$zone_name}
+				</a>
+			</li>
+			</if>
+	        <li>
+	            <a href="{:U('Logout')}">
+	                <i class="icon-chevron-right"></i>退出登录
+	            </a>
+	        </li>
+		</ul>
+	</div>
+</block>
