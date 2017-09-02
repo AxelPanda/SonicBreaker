@@ -39,6 +39,9 @@
 					<button type="submit" class="btn">提交</button>
 				</div>
 			</div>
+			<div class="control-group">
+				<div class="controls Validform_checktip text-warning" id="error_msg"></div>
+			</div>
 		</form>
 		</section>
 	</div>
@@ -60,11 +63,38 @@
 				</a>
 			</li>
 			</if>
-	        <li>
-	            <a href="{:U('Logout')}">
-	                <i class="icon-chevron-right"></i>退出登录
-	            </a>
-	        </li>
+			<li>
+				<a href="{:U('Logout')}">
+					<i class="icon-chevron-right"></i>退出登录
+				</a>
+			</li>
 		</ul>
 	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		$(document)
+			.ajaxStart(function(){
+				$("button:submit").addClass("log-in").attr("disabled", true);
+			})
+			.ajaxStop(function(){
+				$("button:submit").removeClass("log-in").attr("disabled", false);
+			});
+
+
+		$("form").submit(function(){
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
+
+			function success(data){
+				if(data.status){
+					window.location.href = data.url;
+				} else {
+					self.find(".Validform_checktip").html(data.info);
+				}
+			}
+		});
+	</script>
 </block>

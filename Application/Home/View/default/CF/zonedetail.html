@@ -14,6 +14,17 @@
         <!-- Contents
         ================================================== -->
         <section id="contents">
+            <div class="">
+                <h3>{$zone_name}的基本信息</h3>
+            </div>
+            <div>
+                <p class="lead">
+                    SSL状态：{$ssl_status}<br/>
+                    SSL元标签：{$ssl_meta_tag}<br/>
+                    要启用SSL，请添加域名所有权验证记录（特别长的那条）到你的DNS记录中以颁发{$zone_name}的证书。
+                </p>
+            </div>
+            <hr/>
             <volist name="cnames" id="list">
                 <div class="">
                     <h3><a href="{:U('ZoneEdit?zone_name='.$zone_name.'&subdomain='.$key)}">{$key}</a></h3>

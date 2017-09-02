@@ -6,7 +6,7 @@ class CFController extends HomeController {
 	private $host_key = 'your_Cloudflare_Partner_host_key';
 
 	public function Index() {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->redirect('Login');
 		} else {
 			$this->redirect('ZoneList');
@@ -47,8 +47,8 @@ class CFController extends HomeController {
 				$this->error('登录失败：用户名、密码错误');
 			}
 
-			cookie('user_key',   $results['response']['user_key']);
-			cookie('user_email', $results['response']['cloudflare_email']);
+			setcookie('user_key',   $results['response']['user_key']);
+			setcookie('user_email', $results['response']['cloudflare_email']);
 			$this->success('登录成功', U('ZoneList'));
 		} else {
 			$this->display();
@@ -56,19 +56,20 @@ class CFController extends HomeController {
 	}
 
 	public function Logout() {
-		cookie(null);
+		setcookie('user_key',   null);
+		setcookie('user_email', null);
 		$this->success('退出成功', U('Login'));
 	}
 
 	public function ZoneList() {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->error('请先登录', U('Login'));
 		}
 
 		$data = array(
 			'act' => 'user_lookup',
 			'host_key' => $this->host_key,
-			'cloudflare_email' => cookie('user_email')
+			'cloudflare_email' => $_COOKIE['user_email']
 			);
 
 		$result = $this->post_data('https://api.cloudflare.com/host-gw.html', $data);
@@ -92,7 +93,7 @@ class CFController extends HomeController {
 	}
 
 	public function ZoneDetail($zone_name = '') {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->error('请先登录', U('Login'));
 		}
 		if (empty($zone_name)) {
@@ -102,7 +103,7 @@ class CFController extends HomeController {
 		$data = array(
 			'act' => 'zone_lookup',
 			'host_key' => $this->host_key,
-			'user_key' => cookie('user_key'),
+			'user_key' => $_COOKIE['user_key'],
 			'zone_name' => $zone_name
 			);
 
@@ -130,7 +131,7 @@ class CFController extends HomeController {
 	}
 
 	public function ZoneAdd($zone_name = '', $subdomain = '', $resolve_to = '') {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->error('请先登录', U('Login'));
 		}
 		if (IS_POST) {
@@ -144,7 +145,7 @@ class CFController extends HomeController {
 			$data = array(
 				'act' => 'zone_lookup',
 				'host_key' => $this->host_key,
-				'user_key' => cookie('user_key'),
+				'user_key' => $_COOKIE['user_key'],
 				'zone_name' => $zone_name
 				);
 
@@ -176,7 +177,7 @@ class CFController extends HomeController {
 			$data = array(
 				'act' => 'zone_set',
 				'host_key' => $this->host_key,
-				'user_key' => cookie('user_key'),
+				'user_key' => $_COOKIE['user_key'],
 				'zone_name' => $zone_name,
 				'resolve_to' => $resolve_to,
 				'subdomains' => $subdomains
@@ -204,7 +205,7 @@ class CFController extends HomeController {
 	}
 
 	public function ZoneEdit($zone_name = '', $subdomain = '', $resolve_to = '') {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->error('请先登录', U('Login'));
 		}
 		if (empty($zone_name)) {
@@ -213,7 +214,7 @@ class CFController extends HomeController {
 		$data = array(
 			'act' => 'zone_lookup',
 			'host_key' => $this->host_key,
-			'user_key' => cookie('user_key'),
+			'user_key' => $_COOKIE['user_key'],
 			'zone_name' => $zone_name
 			);
 
@@ -250,7 +251,7 @@ class CFController extends HomeController {
 			$data = array(
 				'act' => 'zone_set',
 				'host_key' => $this->host_key,
-				'user_key' => cookie('user_key'),
+				'user_key' => $_COOKIE['user_key'],
 				'zone_name' => $zone_name,
 				'resolve_to' => I('post.resolve_to'),
 				'subdomains' => $subdomains
@@ -280,7 +281,7 @@ class CFController extends HomeController {
 	}
 
 	public function ZoneDel($zone_name = '', $subdomain = '') {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->error('请先登录', U('Login'));
 		}
 		if (empty($zone_name)) {
@@ -293,7 +294,7 @@ class CFController extends HomeController {
 		$data = array(
 			'act' => 'zone_lookup',
 			'host_key' => $this->host_key,
-			'user_key' => cookie('user_key'),
+			'user_key' => $_COOKIE['user_key'],
 			'zone_name' => $zone_name
 			);
 
@@ -324,7 +325,7 @@ class CFController extends HomeController {
 		$data = array(
 			'act' => 'zone_set',
 			'host_key' => $this->host_key,
-			'user_key' => cookie('user_key'),
+			'user_key' => $_COOKIE['user_key'],
 			'zone_name' => $zone_name,
 			'resolve_to' => $resolve_to,
 			'subdomains' => $subdomains
@@ -348,7 +349,7 @@ class CFController extends HomeController {
 	}
 
 	public function ZoneDelete($zone_name = '') {
-		if (empty(cookie('user_key'))) {
+		if (empty($_COOKIE['user_key'])) {
 			$this->error('请先登录', U('Login'));
 		}
 		if (empty($zone_name)) {
@@ -358,7 +359,7 @@ class CFController extends HomeController {
 		$data = array(
 			'act' => 'zone_delete',
 			'host_key' => $this->host_key,
-			'user_key' => cookie('user_key'),
+			'user_key' => $_COOKIE['user_key'],
 			'zone_name' => $zone_name
 			);
 
